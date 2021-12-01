@@ -1,6 +1,0 @@
-﻿  test22.cpp
-c:\users\com\source\repos\test22\test22\test22.cpp(168): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\com\source\repos\test22\test22\test22.cpp(169): warning C4101: 'hdc' :참조되지 않은 지역 변수입니다.
-c:\users\com\source\repos\test22\test22\test22.cpp(199): warning C4101: 'dst' :참조되지 않은 지역 변수입니다.
-c:\users\com\source\repos\test22\test22\test22.cpp(222): warning C4101: 'dst' :참조되지 않은 지역 변수입니다.
-  test22.vcxproj -> C:\Users\com\source\repos\test22\Debug\test22.exe

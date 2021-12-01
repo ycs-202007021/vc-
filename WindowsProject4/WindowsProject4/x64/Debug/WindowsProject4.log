@@ -1,0 +1,5 @@
+﻿  WindowsProject4.cpp
+c:\users\com\source\repos\windowsproject4\windowsproject4\windowsproject4.cpp(176): warning C4101: 'hdc' :참조되지 않은 지역 변수입니다.
+c:\users\com\source\repos\windowsproject4\windowsproject4\windowsproject4.cpp(320): warning C4101: 'dst' :참조되지 않은 지역 변수입니다.
+c:\users\com\source\repos\windowsproject4\windowsproject4\windowsproject4.cpp(343): warning C4101: 'dst' :참조되지 않은 지역 변수입니다.
+  WindowsProject4.vcxproj -> C:\Users\com\source\repos\WindowsProject4\x64\Debug\WindowsProject4.exe

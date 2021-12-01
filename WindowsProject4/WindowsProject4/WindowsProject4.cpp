@@ -175,12 +175,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_CREATE:
 		HDC hdc;
 		MoveWindow(hWnd, 0, 0, 1000, 1000, true); 
-			
-
-		 for (i = 100; i > 0; i--) {
+		 for (i = 0; i < 100; i++) {
 			if (i == 0) {
 				g_map[0].left = 160;
-				g_map[0].top = 0;
+				g_map[0].top = 500;
 				g_map[0].right = g_map[0].left + 40;
 				g_map[0].bottom = g_map[0].top - 40;
 			}
