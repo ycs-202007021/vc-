@@ -125,11 +125,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 
-//버튼을 위한 윈도우 핸들 선언
-HWND g_button;
 HWND g_hWnd;
 int x = 0, y = 0;
-int g_x, g_y, i;
 
 //hMenu를 위한 ID 값 선언
 #define IDM_BTN_CLICK	999
@@ -140,16 +137,18 @@ RECT g_map[1000];
 int g_speed;
 
 // 점수
-int g_score = 0;
+int g_score;
 
 // 타이머
-int g_timer;        
+int g_timer;  
 // 타이머 아이디를 선언
-#define TIMER_ID_1   1
-
-
+#define TIMER_ID_1          1 
+#define TIMER_ID_2          2
+RECT g_small;
+int i;
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	WCHAR mmsg[128] = { 0, };
     switch (message)
     {
         //버튼 이벤트 ID 확인 메세지
@@ -157,7 +156,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         int wmId = LOWORD(wParam);
         // 메뉴 선택을 구문 분석합니다: 버튼 클릭시 ID 확인 가능한 위치
-
+		
         switch (wmId)
         {
         case IDM_ABOUT:
@@ -174,133 +173,140 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_CREATE:
 		HDC hdc;
+		srand(time(NULL));
 		MoveWindow(hWnd, 0, 0, 1000, 1000, true); 
-		 for (i = 0; i < 100; i++) {
+		 for (int i = 0; i < 100; i++) {
 			if (i == 0) {
-				g_map[0].left = 160;
-				g_map[0].top = 500;
+				g_map[0].left = -600;
+				g_map[0].top = -3300;
 				g_map[0].right = g_map[0].left + 40;
-				g_map[0].bottom = g_map[0].top - 40;
+				g_map[0].bottom = g_map[i].top + 40;
 			}
 			else if(i < 5){ // 4개
 				g_map[i].left = g_map[i - 1].left + 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (5 < i && i < 10) { //4개
 				g_map[i].left = g_map[i - 1].left - 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (10 < i && i < 15) {
 				g_map[i].left = g_map[i - 1].left + 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 
 			}
 			else if (15< i && i < 20) {
 				g_map[i].left = g_map[i - 1].left - 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (20 < i && i < 25) {
 				g_map[i].left = g_map[i - 1].left - 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (25 < i && i < 30) {
 				g_map[i].left = g_map[i - 1].left + 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (30 < i && i < 35) {
 				g_map[i].left = g_map[i - 1].left - 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (35 < i && i < 40) {
 				g_map[i].left = g_map[i - 1].left + 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (40 < i && i < 45) {
 				g_map[i].left = g_map[i - 1].left + 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (45 < i && i < 50) {
 				g_map[i].left = g_map[i - 1].left - 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (50 < i && i < 55) {
 				g_map[i].left = g_map[i - 1].left + 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (55 < i && i < 60) {
 				g_map[i].left = g_map[i - 1].left - 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (65 < i && i < 70) {
 				g_map[i].left = g_map[i - 1].left - 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (70 < i && i < 75) {
 				g_map[i].left = g_map[i - 1].left + 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (75 < i && i < 80) {
 				g_map[i].left = g_map[i - 1].left - 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (80 < i && i < 85) {
 				g_map[i].left = g_map[i - 1].left + 40;
 				g_map[i].top = g_map[i - 1].top + 40;
 				g_map[i].right = g_map[i].left + 40;
-				g_map[i].bottom = g_map[i].top - 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (85 < i && i < 90) {
 			g_map[i].left = g_map[i - 1].left - 40;
 			g_map[i].top = g_map[i - 1].top + 40;
 			g_map[i].right = g_map[i].left + 40;
-			g_map[i].bottom = g_map[i].top - 40;
+			g_map[i].bottom = g_map[i].top + 40;
 			}
 			else if (90 < i && i < 95) {
 			g_map[i].left = g_map[i - 1].left + 40;
 			g_map[i].top = g_map[i - 1].top + 40;
 			g_map[i].right = g_map[i].left + 40;
-			g_map[i].bottom = g_map[i].top - 40;
+			g_map[i].bottom = g_map[i].top + 40;
 			}
-			else{
+			else {
 			g_map[i].left = g_map[i - 1].left + 40;
 			g_map[i].top = g_map[i - 1].top + 40;
 			g_map[i].right = g_map[i].left + 40;
-			g_map[i].bottom = g_map[i].top - 40;
+			g_map[i].bottom = g_map[i].top + 40;
 			}
-			g_me.left = 320;
-			g_me.top = 3000;
-			g_me.right = 360;
-			g_me.bottom = 3040;
+
+			g_me.left = g_map[i].left;
+			g_me.top = g_map[i].top-40;
+			g_me.right = g_me.left + 40;
+			g_me.bottom = g_me.top + 40;
+
+			g_small.left = g_me.left;
+			g_small.top = g_me.top +40;
+			g_small.right = g_small.left + 40;
+			g_small.bottom = g_small.top + 30;
 			
 
 		}
@@ -309,8 +315,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		SetTimer(hWnd, TIMER_ID_1, g_speed, NULL);
 
 		// 게임 타이머 시간 설정. 무조건 1초에 한번씩만 불려야 함
-		g_timer = 10;       // 제한 시간 10초
-		SetTimer(hWnd, TIMER_ID_1, 1000, NULL);
+		g_timer = 20;       // 제한 시간 30초
+		SetTimer(hWnd, TIMER_ID_2, 1000, NULL);
 		break;
       
      
@@ -322,72 +328,96 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         // WM_TIMER 메시지는 wParam에 SetTimer에서 설정한 ID 값이 넘겨져 온다!
         switch (wParam)
         {
-		case TIMER_ID_1:
-			if (g_speed != 100)
+			//교수님 보고잇다면 정답을알려주!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		//case TIMER_ID_1:
+		//	for (int i = 0; i < 100; i++) {
+		//		if (FALSE == IntersectRect(&dst, &g_small, &g_map[i])) {  // 좌표 겹침이 없다면
+		//			KillTimer(hWnd, TIMER_ID_1);
+		//			KillTimer(hWnd, TIMER_ID_2);
+		//			MessageBox(hWnd, L"아이고.. 떨어져부럿네... ", L"실패", MB_OK);
+		//			return 0;
+		//		}
+		//	}
+			break;
+			
+		case TIMER_ID_2:
+			g_timer--;
+			if (0 == g_timer)
 			{
-				g_speed -= 100;     // 0.1초씩 감소
-
-				// 먼저 현재 동작 중인 타이머를 제거
 				KillTimer(hWnd, TIMER_ID_1);
-				// 다시 새롭게 타이머를 설정
-				SetTimer(hWnd, TIMER_ID_1, g_speed, NULL);
+				KillTimer(hWnd, TIMER_ID_2);
+				MessageBox(hWnd, L"시간으로 종료", L"게임오버", MB_OK);
 			}
-            break;
-        }
-        // 화면 무효화
-        InvalidateRect(hWnd, NULL, TRUE);
-    }
-    break;
+
+			break;
+		}
+		// 화면 무효화
+		InvalidateRect(hWnd, NULL, TRUE);
+	}
+	break;
+
     case WM_KEYDOWN:
     {
         RECT dst;
 
-        switch (wParam)
-        {
-            // 좌, 상, 우, 하 키가 입력되었는지 확인
-        case VK_LEFT:   // x 좌표의 이동 (left, right) -> 감소
-			for (i = 0; i < 100; i++) {
-			g_map[i].left += 40;
-			g_map[i].top -= 40;;
-			g_map[i].right = g_map[i].left + 40;
-			g_map[i].bottom = g_map[i].top - 40;
-			g_score += 1;
+		switch (wParam)
+		{
+			// 좌, 상, 우, 하 키가 입력되었는지 확인
+		case VK_LEFT:   // x 좌표의 이동 (left, right) -> 감소
+			for (int i = 0; i < 100; i++) {
+				g_map[i].left += 40;
+				g_map[i].top += 40;
+				g_map[i].right = g_map[i].left + 40;
+				g_map[i].bottom = g_map[i].top + 40;
+				
 			}
-            break;
+			g_score++;
+			
+			break;
 
-        case VK_RIGHT:  // x 좌표의 이동 (left, right) -> 증가
-			for (i = 0; i < 100; i++) {
-			g_map[i].left -= 40;
-			g_map[i].top -= 40;;
-			g_map[i].right = g_map[i].left - 40;
-			g_map[i].bottom = g_map[i].top - 40;
-			g_score += 1;
-			/*g_me.left -= 40;
-			g_me.top += 40;
-			g_me.right -= 40;
-			g_me.bottom += 40;*/
+		case VK_RIGHT:  // x 좌표의 이동 (left, right) -> 증가
+			for (int i = 0; i < 100; i++) {
+				g_map[i].left -= 40;
+				g_map[i].top += 40;
+				g_map[i].right = g_map[i].left + 40;
+				g_map[i].bottom = g_map[i].top + 40;
 			}
-            break;
-        }
-		
+			g_score++;
+			break;
+	
+		}
         InvalidateRect(hWnd, NULL, TRUE);
     }
 	break;
-
+	
     case WM_PAINT:
     {
-
+		RECT dst;
+		//MessageBox(hWnd, L"시작!", L"25초만에 끝까지 올라가보세요! :)", MB_OK);
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
-		WCHAR score[100] = { 0, };
-		for (int i = 100; i > 0; i--) {
+		WCHAR score[64] = { 0, };
+		
+		for (int i = 0; i < 100; i++) {
 			Rectangle(hdc, g_map[i].left, g_map[i].top, g_map[i].right, g_map[i].bottom);
 		}
 		
+		
         Ellipse(hdc, g_me.left, g_me.top, g_me.right, g_me.bottom); 
-       
+		Rectangle(hdc, g_small.left, g_small.top, g_small.right, g_small.bottom);
 		wsprintfW(score, L"계단수 : %d\t Timer: %d", g_score, g_timer);
-		TextOut(hdc, 1, 1, score, lstrlenW(score));
+		TextOut(hdc, 10, 500, score, lstrlenW(score));
+
+
+		if (g_score==99)
+		{
+		KillTimer(hWnd, TIMER_ID_1);
+		KillTimer(hWnd, TIMER_ID_2);
+		MessageBox(hWnd, L"이기셨어요!!", L"성공", MB_OK);
+		}
+
+		
 		EndPaint(hWnd, &ps);
         }
 		
